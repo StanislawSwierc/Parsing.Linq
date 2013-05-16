@@ -1,8 +1,6 @@
-﻿using System;
-using System.Parsing.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Parsing.Linq.Test
+namespace System.Parsing.Linq.Test
 {
     [TestClass]
     public class ParserTest

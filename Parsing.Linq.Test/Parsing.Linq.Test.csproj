@@ -6,7 +6,7 @@
     <ProjectGuid>{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Parsing.Linq.Test</RootNamespace>
+    <RootNamespace>System.Parsing.Linq.Test</RootNamespace>
     <AssemblyName>Parsing.Linq.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
