@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing.Linq", "Parsing.Linq\Parsing.Linq.csproj", "{BA56ECFE-B174-4A5F-9964-58A89B2BBA3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing.Linq.Test", "Parsing.Linq.Test\Parsing.Linq.Test.csproj", "{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{BA56ECFE-B174-4A5F-9964-58A89B2BBA3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA56ECFE-B174-4A5F-9964-58A89B2BBA3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA56ECFE-B174-4A5F-9964-58A89B2BBA3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
