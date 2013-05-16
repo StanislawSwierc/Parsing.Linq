@@ -36,7 +36,10 @@ namespace System.Parsing.Linq
                     if(input.Length > 0)
                     {
                         var c = input[0];
-                        result = new ParserResult<char>(c, input.Substring(1));
+                        if(predicate(c))
+                        {
+                            result = new ParserResult<char>(c, input.Substring(1));
+                        }
                     }
                     return result;
                 });

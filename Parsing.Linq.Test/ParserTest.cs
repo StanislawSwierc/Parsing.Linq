@@ -32,5 +32,29 @@ namespace System.Parsing.Linq.Test
                 .Cast<int>();
             Assert.IsNotNull(p.Parse("1"));
         }
+
+        [TestMethod]
+        public void FromChar_Char_Test()
+        {
+            var p = ParserExtensions.FromChar('c');
+            Assert.IsNotNull(p.Parse("c"));
+            Assert.IsNull(p.Parse("a"));
+        }
+
+        [TestMethod]
+        public void FromChar_Predicate_Test()
+        {
+            var p = ParserExtensions.FromChar(c => c == 'c');
+            Assert.IsNotNull(p.Parse("c"));
+            Assert.IsNull(p.Parse("a"));
+
+        }
+        [TestMethod]
+        public void FromChar_Enumerable_Test()
+        {
+            var p = ParserExtensions.FromChar("cs");
+            Assert.IsNotNull(p.Parse("c"));
+            Assert.IsNull(p.Parse("a"));
+        }
     }
 }
