@@ -13,5 +13,15 @@ namespace System.Parsing.Linq.Test
             Assert.AreEqual(1, result.Value);
             Assert.AreEqual("a", result.Rest);
         }
+
+        [TestMethod]
+        public void OrTest()
+        {
+            var p1 = ParserExtensions.FromRegex(@"\d");
+            var p2 = ParserExtensions.FromRegex(@"\w");
+            var p = p1 | p2;
+            Assert.IsNotNull(p.Parse("1"));
+            Assert.IsNotNull(p.Parse("a"));
+        }
     }
 }
