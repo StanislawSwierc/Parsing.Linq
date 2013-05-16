@@ -6,7 +6,7 @@ namespace System.Parsing.Linq.Test
     public class ParserTest
     {
         [TestMethod]
-        public void Parse_Digit_ReturnsInt()
+        public void Parse_Digit_Correct()
         {
             var p = ParserExtensions.FromRegex(@"\d", int.Parse);
             var result = p.Parse("1a");
@@ -22,6 +22,15 @@ namespace System.Parsing.Linq.Test
             var p = p1 | p2;
             Assert.IsNotNull(p.Parse("1"));
             Assert.IsNotNull(p.Parse("a"));
+        }
+
+        [TestMethod]
+        public void CastTest()
+        {
+            var p = ParserExtensions.FromRegex(@"\d", int.Parse)
+                .Cast<object>()
+                .Cast<int>();
+            Assert.IsNotNull(p.Parse("1"));
         }
     }
 }
