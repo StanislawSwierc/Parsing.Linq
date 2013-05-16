@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace System.Parsing.Linq
@@ -15,6 +16,36 @@ namespace System.Parsing.Linq
         public static Parser<T> Create<T>(Func<string, ParserResult<T>> func)
         {
             return new AnonymousParser<T>(func);
+        }
+
+        public static Parser<char> FromChar(char c)
+        {
+            return Create(input =>
+                {
+                    return input.Length > 0 && input[0] == c
+                        ? new ParserResult<char>(c, input.Substring(1))
+                        : null;
+                });
+        }
+
+        public static Parser<char> FromChar(Func<char, bool> predicate)
+        {
+            return Create(input =>
+                {
+                    var result = default(ParserResult<char>);
+                    if(input.Length > 0)
+                    {
+                        var c = input[0];
+                        result = new ParserResult<char>(c, input.Substring(1));
+                    }
+                    return result;
+                });
+        }
+
+        public static Parser<char> FromChar(IEnumerable<char> source)
+        {
+            var set = new HashSet<char>(source);
+            return FromChar(set.Contains);
         }
 
         public static Parser<string> FromString(string value)
