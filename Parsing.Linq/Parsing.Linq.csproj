@@ -45,7 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="AnonymousParser.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="ParserExtensions.cs" />
+    <Compile Include="ParserResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

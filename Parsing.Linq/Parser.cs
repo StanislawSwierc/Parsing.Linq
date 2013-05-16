@@ -1,9 +1,7 @@
 ﻿namespace System.Parsing.Linq
 {
-    class Parser
+    public abstract class Parser<T>
     {
-        static void Main(string[] args)
-        {
-        }
+        public abstract ParserResult<T> Parse(string input);
     }
 }
