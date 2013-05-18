@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Parsing.Linq.Roslyn</id>
+        <version>0.8.0</version>
+        <title>Parsing.Linq.Roslyn</title>
+        <authors>StanislawSwierc</authors>
+        <owners>StanislawSwierc</owners>
+        <licenseUrl>https://github.com/StanislawSwierc/Parsing.Linq/blob/master/LICENSE.md</licenseUrl>
+        <projectUrl>https://github.com/StanislawSwierc/Parsing.Linq</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Monadic Parser Combinators wrappers for parsers that ship with Roslyn. Combinators were designed to work well with LINQ.</description>
+        <summary>Monadic Parser Combinators with LINQ</summary>
+        <tags>parser linq monads</tags>
+    </metadata>
+    <files>
+        <file src="..\Parsing.Linq.Roslyn\bin\Release\Parsing.Linq.Roslyn.dll" target="lib\net45\Parsing.Linq.Roslyn.dll" />
+    </files>
+</package>
