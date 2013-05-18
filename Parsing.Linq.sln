@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing.Linq", "Parsing.Lin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing.Linq.Test", "Parsing.Linq.Test\Parsing.Linq.Test.csproj", "{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing.Linq.Roslyn", "Parsing.Linq.Roslyn\Parsing.Linq.Roslyn.csproj", "{9B803013-4673-49F8-8F87-79E4D983EDB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECAE4B91-8778-4C9F-9298-AA1D6374BEA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B803013-4673-49F8-8F87-79E4D983EDB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B803013-4673-49F8-8F87-79E4D983EDB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B803013-4673-49F8-8F87-79E4D983EDB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B803013-4673-49F8-8F87-79E4D983EDB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
