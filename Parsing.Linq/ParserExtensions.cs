@@ -51,7 +51,7 @@ namespace System.Parsing.Linq
             return FromChar(set.Contains);
         }
 
-        public static Parser<string> FromString(string value)
+        public static Parser<string> FromText(string value)
         {
             return Create(input =>
                 {
