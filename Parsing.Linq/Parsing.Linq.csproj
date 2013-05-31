@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AnonymousParser.cs" />
     <Compile Include="CharParsers.cs" />
+    <Compile Include="EmptyParser.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParserExtensions.cs" />
     <Compile Include="ParserResult.cs" />

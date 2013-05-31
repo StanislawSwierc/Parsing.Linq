@@ -5,6 +5,11 @@ namespace System.Parsing.Linq
 {
     public static class ParserExtensions
     {
+        public static Parser<T> Empty<T>()
+        {
+            return new EmptyParser<T>();
+        }
+
         public static T ParseComplete<T>(this Parser<T> parser, string input)
         {
             var result = parser.Parse(input);
