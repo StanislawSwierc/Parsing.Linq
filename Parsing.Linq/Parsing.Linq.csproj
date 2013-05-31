@@ -45,6 +45,7 @@
     <Compile Include="CharParsers.cs" />
     <Compile Include="EmptyParser.cs" />
     <Compile Include="Parser.cs" />
+    <Compile Include="Parser.Format.cs" />
     <Compile Include="ParserExtensions.cs" />
     <Compile Include="ParserResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

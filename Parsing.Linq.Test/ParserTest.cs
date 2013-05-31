@@ -56,5 +56,20 @@ namespace System.Parsing.Linq.Test
             Assert.IsNotNull(p.Parse("c"));
             Assert.IsNull(p.Parse("a"));
         }
+
+        [TestMethod]
+        public void Constructor_CanExtractResource()
+        {
+            var parser = Parser.FromFormat(
+                "There are two characters: '{0}' and '{1}'",
+                ParserExtensions.FromChar('a'),
+                ParserExtensions.FromChar('a'));
+
+            var result = parser.ParseComplete("There are two characters: 'a' and 'b'");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual('a', result.Item1);
+            Assert.AreEqual('b', result.Item2);
+        }
     }
 }
