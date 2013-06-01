@@ -1,0 +1,74 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#
+// Set the max number of parameters.
+const int max = 8;
+#>
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace System.Parsing.Linq
+{
+    public static class Parser
+    {
+        /// <summary>
+        /// Returns an array of string parsers which can match substrings of the
+        /// format string that are delimited by markers.
+        /// </summary>
+        /// <param name="format">Format string.</param>
+        /// <param name="count">Number of markers.</param>
+        /// <returns>Array of string parsers of size count + 1.</returns>
+        private static Parser<string>[] SplitFormat(string format, int count)
+        {
+            if (format == null) throw new ArgumentNullException("format");
+
+            var matches = Regex.Matches(format, @"{\d}");
+
+            if (matches.Count != 2) throw new FormatException("Format should have exactly 2 {number} tokens");
+
+            // Save positions
+            var positions = matches.Cast<Match>()
+                .Select(c => c.Index)
+                // Add guard at the end.
+                .Concat(new[] { format.Length })
+                .ToArray();
+
+            var parts = new Parser<string>[3];
+            var curr = 0;
+            for (var i = 0; i <= 2; i++)
+            {
+                var next = positions[i];
+                var text = format.Substring(curr, next - curr);
+                parts[i] = text != string.Empty
+                    ? ParserExtensions.FromText(text)
+                    : ParserExtensions.Empty<string>();
+                curr = next + 3;
+            }
+
+            return parts;
+        }
+<# for(int length=1; length <= max; length++) { #>
+<# var generate = new Func<string, string>(format => string.Join(", ", Enumerable.Range(1, length).Select(i => string.Format(format, i)))); #>
+<# var typeParameters = generate("T{0}"); #>
+<# var argsDeclaration = generate("Parser<T{0}> p{0}"); #>
+<# var argsInvokation = string.Join(", ", Enumerable.Range(1, length).Select(i => string.Format("t{0}", i*2))); #>
+
+        public static Parser<Tuple<<#=typeParameters#>>> FromFormat<<#=typeParameters#>>(string format, <#=argsDeclaration#>)
+        {
+            var parts = SplitFormat(format, <#=length#>);
+
+            return
+                from t1 in parts[0]
+<# for(var i=1; i <= length; i++) { #>
+                from t<#=i*2#> in p<#=i#>
+                from t<#=i*2+1#> in parts[<#=i#>]
+<# } #>
+                select new Tuple<<#=typeParameters#>>(<#=argsInvokation#>);
+        }
+<# } #>
+    }
+}

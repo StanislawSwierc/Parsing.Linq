@@ -45,13 +45,24 @@
     <Compile Include="CharParsers.cs" />
     <Compile Include="EmptyParser.cs" />
     <Compile Include="Parser.cs" />
-    <Compile Include="Parser.Format.cs" />
+    <Compile Include="Parser.Format.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Parser.Format.tt</DependentUpon>
+    </Compile>
     <Compile Include="ParserExtensions.cs" />
     <Compile Include="ParserResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Parser.Format.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Parser.Format.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
