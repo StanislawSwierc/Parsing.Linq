@@ -58,12 +58,12 @@ namespace System.Parsing.Linq.Test
         }
 
         [TestMethod]
-        public void Constructor_CanExtractResource()
+        public void FromFormatTest()
         {
             var parser = Parser.FromFormat(
                 "There are two characters: '{0}' and '{1}'",
                 ParserExtensions.FromChar('a'),
-                ParserExtensions.FromChar('a'));
+                ParserExtensions.FromChar('b'));
 
             var result = parser.ParseComplete("There are two characters: 'a' and 'b'");
 
