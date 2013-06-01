@@ -28,18 +28,22 @@ namespace System.Parsing.Linq
 
             var matches = Regex.Matches(format, @"{\d}");
 
-            if (matches.Count != 2) throw new FormatException("Format should have exactly 2 {number} tokens");
+            if (matches.Count != count) throw new FormatException(string.Format(
+                "Format should have exactly {0} {{number}} tokens", count));
 
             // Save positions
-            var positions = matches.Cast<Match>()
-                .Select(c => c.Index)
-                // Add guard at the end.
-                .Concat(new[] { format.Length })
-                .ToArray();
+            var positions = new int[count + 1];
+            for (var i = 0; i < count; i++)
+            {
+                positions[i] = matches[i].Index;
+            }
 
-            var parts = new Parser<string>[3];
+            // Add guard at the end.
+            positions[count] = format.Length;
+
+            var parts = new Parser<string>[count + 1];
             var curr = 0;
-            for (var i = 0; i <= 2; i++)
+            for (var i = 0; i <= count; i++)
             {
                 var next = positions[i];
                 var text = format.Substring(curr, next - curr);
