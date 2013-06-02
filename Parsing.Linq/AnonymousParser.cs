@@ -1,6 +1,6 @@
 namespace System.Parsing.Linq
 {
-    public class AnonymousParser<T> : Parser<T>
+    internal class AnonymousParser<T> : Parser<T>
     {
         private readonly Func<string, ParserResult<T>> _func;
 
