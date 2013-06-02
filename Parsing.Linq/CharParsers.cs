@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace System.Parsing.Linq
+﻿namespace System.Parsing.Linq
 {
     public static class CharParsers
     {
