@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace System.Parsing.Linq
 {
-    public static class ParserExtensions
+    public static partial class Parser
     {
         public static Parser<T> Empty<T>()
         {

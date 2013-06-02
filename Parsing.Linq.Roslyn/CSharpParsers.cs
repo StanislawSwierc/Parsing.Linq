@@ -7,7 +7,7 @@ namespace System.Parsing.Linq
     {
         public static Parser<T> FromSyntaxParse<T>(Func<string, int, T> func) where T : CommonSyntaxNode
         {
-            return ParserExtensions.Create(input =>
+            return Parser.Create(input =>
                 {
                     var syntax = func(input, 0);
                     return syntax.IsMissing ? null :
@@ -17,7 +17,7 @@ namespace System.Parsing.Linq
 
         public static Parser<T> FromSyntaxParse<T>(Func<string, int, ParseOptions, T> func, ParseOptions options = null) where T : CommonSyntaxNode
         {
-            return ParserExtensions.Create(input =>
+            return Parser.Create(input =>
                 {
                     var syntax = func(input, 0, options);
                     return syntax.IsMissing ? null :

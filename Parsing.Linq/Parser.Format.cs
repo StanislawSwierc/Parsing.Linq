@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace System.Parsing.Linq
 {
-    public static class Parser
+    public static partial class Parser
     {
         /// <summary>
         /// Returns an array of string parsers which can match substrings of the
@@ -38,8 +38,8 @@ namespace System.Parsing.Linq
                 var next = positions[i];
                 var text = format.Substring(curr, next - curr);
                 parts[i] = text != string.Empty
-                    ? ParserExtensions.FromText(text)
-                    : ParserExtensions.Empty<string>();
+                    ? Parser.FromText(text)
+                    : Parser.Empty<string>();
                 curr = next + 3;
             }
 
