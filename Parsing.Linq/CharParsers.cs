@@ -20,5 +20,19 @@
         public static readonly Parser<char> LeftParen = Parser.FromChar('(');
         public static readonly Parser<char> RightParen = Parser.FromChar(')');
 
+        public static readonly Parser<char> CarriageReturn = Parser.FromChar('\r');
+        public static readonly Parser<char> LineFeed = Parser.FromChar('\n');
+
+        /// <summary>
+        /// New line parser.
+        /// </summary>
+        /// <remarks>
+        /// One may argue if this parser should appear in CharParsers class. It is a string parser
+        /// because depending on the environment the new line may consists of one or two
+        /// characters. Nevertheless, conceptually this is a character and CharParsers would be
+        /// the first place I would expect it to find.
+        /// </remarks>
+        public static readonly Parser<string> NewLine = Parser.FromText(Environment.NewLine);
+
     }
 }
