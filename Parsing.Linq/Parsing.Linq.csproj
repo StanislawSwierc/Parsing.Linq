@@ -51,7 +51,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Parser.Format.tt</DependentUpon>
     </Compile>
-    <Compile Include="ParserExtensions.cs" />
+    <Compile Include="Parser.Factories.cs" />
     <Compile Include="ParserResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

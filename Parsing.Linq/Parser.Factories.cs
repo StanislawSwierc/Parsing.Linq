@@ -5,22 +5,14 @@ namespace System.Parsing.Linq
 {
     public static partial class Parser
     {
-        public static Parser<T> Empty<T>()
-        {
-            return new EmptyParser<T>();
-        }
-
-        public static T ParseComplete<T>(this Parser<T> parser, string input)
-        {
-            var result = parser.Parse(input);
-            return result != null && string.IsNullOrEmpty(result.Rest)
-                ? result.Value
-                : default(T);
-        }
-
         public static Parser<T> Create<T>(Func<string, ParserResult<T>> func)
         {
             return new AnonymousParser<T>(func);
+        }
+
+        public static Parser<T> Empty<T>()
+        {
+            return new EmptyParser<T>();
         }
 
         public static Parser<char> FromChar(char c)

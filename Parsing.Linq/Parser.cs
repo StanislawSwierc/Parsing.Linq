@@ -4,6 +4,14 @@
     {
         public abstract ParserResult<T> Parse(string input);
 
+        public T ParseComplete(string input)
+        {
+            var result = Parse(input);
+            return result != null && string.IsNullOrEmpty(result.Rest)
+                ? result.Value
+                : default(T);
+        }
+
         public static Parser<T> operator |(Parser<T> p1, Parser<T> p2)
         {
             return Parser.Create(input => p1.Parse(input) ?? p2.Parse(input));
