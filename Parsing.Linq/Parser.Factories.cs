@@ -5,7 +5,7 @@ namespace System.Parsing.Linq
 {
     public static partial class Parser
     {
-        public static Parser<T> Create<T>(Func<string, ParserResult<T>> func)
+        public static Parser<T> Create<T>(Func<string, int, ParserResult<T>> func)
         {
             return new AnonymousParser<T>(func);
         }
@@ -17,28 +17,28 @@ namespace System.Parsing.Linq
 
         public static Parser<char> FromChar(char c)
         {
-            return Create(input =>
+            return Create((text, offset) =>
                 {
-                    return input.Length > 0 && input[0] == c
-                        ? new ParserResult<char>(c, input.Substring(1))
-                        : null;
+                    return offset < text.Length && text[offset] == c
+                        ? new ParserResult<char>(c, text, offset, 1)
+                        : ParserResult<char>.Missing;
                 });
         }
 
         public static Parser<char> FromChar(Func<char, bool> predicate)
         {
-            return Create(input =>
+            return Create((text, offset) =>
                 {
                     var result = default(ParserResult<char>);
-                    if(input.Length > 0)
+                    if(offset < text.Length)
                     {
-                        var c = input[0];
+                        var c = text[offset];
                         if(predicate(c))
                         {
-                            result = new ParserResult<char>(c, input.Substring(1));
+                            result = new ParserResult<char>(c, text, offset, 1);
                         }
                     }
-                    return result;
+                    return result ?? ParserResult<char>.Missing;
                 });
         }
 
@@ -50,11 +50,11 @@ namespace System.Parsing.Linq
 
         public static Parser<string> FromText(string value)
         {
-            return Create(input =>
+            return Create((text, offset) =>
                 {
-                    return input.StartsWith(value)
-                        ? new ParserResult<string>(value, input.Substring(value.Length))
-                        : null;
+                    return (offset + value.Length < text.Length) && (text.Substring(offset, value.Length) == value)
+                        ? new ParserResult<string>(value, text, offset, value.Length)
+                        : ParserResult<string>.Missing;
                 });
         }
 
@@ -78,12 +78,12 @@ namespace System.Parsing.Linq
 
             var regex = new Regex(pattern);
 
-            return Create(input =>
+            return Create((text, offset) =>
                 {
-                    var match = regex.Match(input);
+                    var match = regex.Match(text, offset);
                     return match.Success
-                        ? new ParserResult<T>(select(match), input.Substring(match.Length))
-                        : null;
+                        ? new ParserResult<T>(select(match), text, offset, match.Length)
+                        : ParserResult<T>.Missing;
                 });
         }
 

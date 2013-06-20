@@ -6,11 +6,11 @@
             this Parser<T1> parser,
             Func<T1, T2> selector)
         {
-            return Create(input =>
+            return Create((text, offset) =>
                 {
-                    var res = parser.Parse(input);
-                    if (res == null) return null;
-                    return new ParserResult<T2>(selector(res.Value), res.Rest);
+                    var res = parser.Parse(text, offset);
+                    if (res.IsMissing) return ParserResult<T2>.Missing;
+                    return new ParserResult<T2>(selector(res.Value), res.FullText, res.Position, res.Length);
                 });
         }
 
@@ -19,14 +19,14 @@
             Func<TValue, Parser<TIntermediate>> selector,
             Func<TValue, TIntermediate, TValue2> projector)
         {
-            return Create(input =>
+            return Create((text, offset) =>
                 {
-                    var res = parser.Parse(input);
-                    if (res == null) return null;
+                    var res = parser.Parse(text, offset);
+                    if (res.IsMissing) return ParserResult<TValue2>.Missing;
                     var val = res.Value;
-                    var res2 = selector(val).Parse(res.Rest);
-                    if (res2 == null) return null;
-                    return new ParserResult<TValue2>(projector(val, res2.Value), res2.Rest);
+                    var res2 = selector(val).Parse(text, offset + res.Length);
+                    if (res2.IsMissing) return ParserResult<TValue2>.Missing;
+                    return new ParserResult<TValue2>(projector(val, res2.Value), text, offset, res.Length + res.Length);
                 });
         }
 
@@ -34,10 +34,10 @@
             this Parser<T> parser,
             Func<T, bool> predicate)
         {
-            return Create(input =>
+            return Create((text, offset) =>
                 {
-                    var res = parser.Parse(input);
-                    if (res == null || !predicate(res.Value)) return null;
+                    var res = parser.Parse(text, offset);
+                    if (res.IsMissing || !predicate(res.Value)) return ParserResult<T>.Missing;
                     return res;
                 });
         }

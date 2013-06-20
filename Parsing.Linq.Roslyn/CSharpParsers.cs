@@ -7,21 +7,23 @@ namespace System.Parsing.Linq
     {
         public static Parser<T> FromSyntaxParse<T>(Func<string, int, T> func) where T : CommonSyntaxNode
         {
-            return Parser.Create(input =>
+            return Parser.Create((text, offset) =>
                 {
-                    var syntax = func(input, 0);
-                    return syntax.IsMissing ? null :
-                        new ParserResult<T>(syntax, input.Substring(syntax.FullSpan.Length));
+                    var syntax = func(text, offset);
+                    return syntax.IsMissing
+                        ? ParserResult<T>.Missing
+                        : new ParserResult<T>(syntax, text, offset, syntax.FullSpan.Length);
                 });
         }
 
         public static Parser<T> FromSyntaxParse<T>(Func<string, int, ParseOptions, T> func, ParseOptions options = null) where T : CommonSyntaxNode
         {
-            return Parser.Create(input =>
+            return Parser.Create((text, offset) =>
                 {
-                    var syntax = func(input, 0, options);
-                    return syntax.IsMissing ? null :
-                        new ParserResult<T>(syntax, input.Substring(syntax.FullSpan.Length));
+                    var syntax = func(text, offset, options);
+                    return syntax.IsMissing
+                        ? ParserResult<T>.Missing
+                        : new ParserResult<T>(syntax, text, offset, syntax.FullSpan.Length);
                 });
         }
 

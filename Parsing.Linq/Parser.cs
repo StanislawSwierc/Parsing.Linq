@@ -2,19 +2,25 @@
 {
     public abstract class Parser<T>
     {
-        public abstract ParserResult<T> Parse(string input);
+        public abstract ParserResult<T> Parse(string text, int offset = 0);
 
         public T ParseComplete(string input)
         {
             var result = Parse(input);
-            return result != null && string.IsNullOrEmpty(result.Rest)
+            return !result.IsMissing && result.FullText.Length == result.Position + result.Length
                 ? result.Value
                 : default(T);
         }
 
         public static Parser<T> operator |(Parser<T> p1, Parser<T> p2)
         {
-            return Parser.Create(input => p1.Parse(input) ?? p2.Parse(input));
+            return Parser.Create((text, offset) =>
+                {
+                    var result = p1.Parse(text, offset);
+                    return !result.IsMissing
+                        ? result
+                        : p2.Parse(text, offset);
+                });
         }
 
         /// <remarks>

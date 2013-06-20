@@ -5,13 +5,21 @@ namespace System.Parsing.Linq.Test
     [TestClass]
     public class ParserTest
     {
+        public bool CanParse<T>(Parser<T> parser, string text)
+        {
+            var result = parser.Parse(text);
+            return !result.IsMissing;
+        }
+
+
         [TestMethod]
         public void Parse_Digit_Correct()
         {
             var p = Parser.FromRegex(@"\d", int.Parse);
             var result = p.Parse("1a");
             Assert.AreEqual(1, result.Value);
-            Assert.AreEqual("a", result.Rest);
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(0, result.Position);
         }
 
         [TestMethod]
@@ -20,8 +28,8 @@ namespace System.Parsing.Linq.Test
             var p1 = Parser.FromRegex(@"\d");
             var p2 = Parser.FromRegex(@"\w");
             var p = p1 | p2;
-            Assert.IsNotNull(p.Parse("1"));
-            Assert.IsNotNull(p.Parse("a"));
+            Assert.IsTrue(CanParse(p, "1"));
+            Assert.IsTrue(CanParse(p, "a"));
         }
 
         [TestMethod]
@@ -30,15 +38,15 @@ namespace System.Parsing.Linq.Test
             var p = Parser.FromRegex(@"\d", int.Parse)
                 .Cast<object>()
                 .Cast<int>();
-            Assert.IsNotNull(p.Parse("1"));
+            Assert.IsTrue(CanParse(p, "1"));
         }
 
         [TestMethod]
         public void FromChar_Char_Test()
         {
             var p = Parser.FromChar('c');
-            Assert.IsNotNull(p.Parse("c"));
-            Assert.IsNull(p.Parse("a"));
+            Assert.IsTrue(CanParse(p, "c"));
+            Assert.IsFalse(CanParse(p, "a"));
         }
 
         [TestMethod]
