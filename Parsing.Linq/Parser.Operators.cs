@@ -10,7 +10,7 @@
                 {
                     var res = parser.Parse(text, offset);
                     if (res.IsMissing) return ParserResult<T2>.Missing;
-                    return new ParserResult<T2>(selector(res.Value), res.FullText, res.Position, res.Length);
+                    return new ParserResult<T2>(selector(res.Value), res.Source, res.Position, res.Length);
                 });
         }
 

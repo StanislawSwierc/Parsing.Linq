@@ -7,7 +7,7 @@
         public T ParseComplete(string input)
         {
             var result = Parse(input);
-            return !result.IsMissing && result.FullText.Length == result.Position + result.Length
+            return !result.IsMissing && result.Source.Length == result.Position + result.Length
                 ? result.Value
                 : default(T);
         }

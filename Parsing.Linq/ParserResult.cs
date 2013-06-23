@@ -5,19 +5,19 @@ namespace System.Parsing.Linq
         public static ParserResult<T> Missing = new ParserResult<T>();
 
         private readonly T _value;
-        private readonly string _fullText;
+        private readonly string _source;
         private readonly int _position;
         private readonly int _length;
         private readonly bool _isMissing;
 
-        public ParserResult(T value, string fullText, int position, int length)
+        public ParserResult(T value, string source, int position, int length)
         {
-            if (fullText == null) throw new ArgumentNullException("fullText");
-            if (position < 0 || position >= fullText.Length) throw new ArgumentOutOfRangeException("position");
-            if (length < 0 || position + length > fullText.Length) throw new ArgumentOutOfRangeException("position");
+            if (source == null) throw new ArgumentNullException("source");
+            if (position < 0 || position >= source.Length) throw new ArgumentOutOfRangeException("position");
+            if (length < 0 || position + length > source.Length) throw new ArgumentOutOfRangeException("position");
 
             _value = value;
-            _fullText = fullText;
+            _source = source;
             _position = position;
             _length = length;
             _isMissing = false;
@@ -30,7 +30,7 @@ namespace System.Parsing.Linq
 
         public T Value { get { return _value; } }
 
-        public string FullText { get { return _fullText; } }
+        public string Source { get { return _source; } }
 
         public int Position { get { return _position; } }
 
@@ -38,6 +38,6 @@ namespace System.Parsing.Linq
 
         public bool IsMissing { get { return _isMissing; } }
 
-        public string Text { get { return _fullText.Substring(_position, _length); } }
+        public string Text { get { return _source.Substring(_position, _length); } }
     }
 }
