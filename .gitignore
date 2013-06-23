@@ -99,3 +99,6 @@ packages/
 
 # Windows Store app package directory
 AppPackages/
+
+# NuGet packages
+*.nupkg
