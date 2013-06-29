@@ -21,12 +21,12 @@
         {
             return Create((text, offset) =>
                 {
-                    var res = parser.Parse(text, offset);
-                    if (res.IsMissing) return ParserResult<TValue2>.Missing;
-                    var val = res.Value;
-                    var res2 = selector(val).Parse(text, offset + res.Length);
+                    var res1 = parser.Parse(text, offset);
+                    if (res1.IsMissing) return ParserResult<TValue2>.Missing;
+                    var val1 = res1.Value;
+                    var res2 = selector(val1).Parse(text, offset + res1.Length);
                     if (res2.IsMissing) return ParserResult<TValue2>.Missing;
-                    return new ParserResult<TValue2>(projector(val, res2.Value), text, offset, res.Length + res.Length);
+                    return new ParserResult<TValue2>(projector(val1, res2.Value), text, offset, res1.Length + res2.Length);
                 });
         }
 

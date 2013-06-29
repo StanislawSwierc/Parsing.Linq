@@ -23,6 +23,22 @@ namespace System.Parsing.Linq.Test
         }
 
         [TestMethod]
+        public void SelectManyTest()
+        {
+            var p =
+                from t1 in Parser.FromChar('a')
+                from t2 in Parser.FromChar('b')
+                from t3 in Parser.FromChar('c')
+                select Tuple.Create(t1, t2, t3);
+
+            var r = p.ParseComplete("abc");
+
+            Assert.AreEqual('a', r.Item1);
+            Assert.AreEqual('b', r.Item2);
+            Assert.AreEqual('c', r.Item3);
+        }
+
+        [TestMethod]
         public void OrTest()
         {
             var p1 = Parser.FromRegex(@"\d");
