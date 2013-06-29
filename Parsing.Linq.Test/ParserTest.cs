@@ -58,6 +58,15 @@ namespace System.Parsing.Linq.Test
         }
 
         [TestMethod]
+        public void FromTextTest()
+        {
+            var p = Parser.FromText("Text");
+
+            Assert.IsTrue(CanParse(p, "Text"));
+            Assert.IsFalse(CanParse(p, "NotText"));
+        }
+
+        [TestMethod]
         public void FromChar_Char_Test()
         {
             var p = Parser.FromChar('c');

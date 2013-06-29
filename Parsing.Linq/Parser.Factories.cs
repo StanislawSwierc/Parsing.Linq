@@ -52,7 +52,7 @@ namespace System.Parsing.Linq
         {
             return Create((text, offset) =>
                 {
-                    return (offset + value.Length < text.Length) && (text.Substring(offset, value.Length) == value)
+                    return (offset + value.Length <= text.Length) && (text.Substring(offset, value.Length) == value)
                         ? new ParserResult<string>(value, text, offset, value.Length)
                         : ParserResult<string>.Missing;
                 });
