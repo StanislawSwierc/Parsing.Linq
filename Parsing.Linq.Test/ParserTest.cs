@@ -52,17 +52,20 @@ namespace System.Parsing.Linq.Test
         [TestMethod]
         public void FromChar_Predicate_Test()
         {
-            var p = Parser.FromChar(c => c == 'c');
-            Assert.IsNotNull(p.Parse("c"));
-            Assert.IsNull(p.Parse("a"));
+            var p = Parser.FromChar(c => c == 'a');
+
+            Assert.IsTrue(CanParse(p, "a"));
+            Assert.IsFalse(CanParse(p, "b"));
 
         }
         [TestMethod]
         public void FromChar_Enumerable_Test()
         {
-            var p = Parser.FromChar("cs");
-            Assert.IsNotNull(p.Parse("c"));
-            Assert.IsNull(p.Parse("a"));
+            var p = Parser.FromChar("ab");
+
+            Assert.IsTrue(CanParse(p, "a"));
+            Assert.IsTrue(CanParse(p, "b"));
+            Assert.IsFalse(CanParse(p, "c"));
         }
 
         [TestMethod]
