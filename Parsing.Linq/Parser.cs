@@ -2,14 +2,41 @@
 {
     public abstract class Parser<T>
     {
+        /// <summary>
+        /// Parse the text starting at the given offset.
+        /// </summary>
+        /// <param name="text">Text to parse</param>
+        /// <param name="offset">Offset to start with.</param>
+        /// <returns>Parse result.</returns>
         public abstract ParserResult<T> Parse(string text, int offset = 0);
 
-        public T ParseComplete(string input)
+        /// <summary>
+        /// Parse all text or throw an exception if that is impossible.
+        /// </summary>
+        /// <param name="text">Text to parse.</param>
+        /// <returns>Result of the parse.</returns>
+        public T ParseAll(string text)
         {
-            var result = Parse(input);
-            return !result.IsMissing && result.Source.Length == result.Position + result.Length
-                ? result.Value
-                : default(T);
+            var parseResult = Parse(text);
+            var success = !parseResult.IsMissing && parseResult.Position + parseResult.Length == text.Length;
+
+            if(!success) throw new FormatException("Text could not be parsed.");
+
+            return parseResult.Value;
+        }
+
+        /// <summary>
+        /// Parse all the text. A return value indicates if the operation was successful.
+        /// </summary>
+        /// <param name="text">Text to parse.</param>
+        /// <param name="result">Result of the parse or default if it failed.</param>
+        /// <returns>True if the operation was successful and False otherwise.</returns>
+        public bool TryParseAll(string text, out T result)
+        {
+            var parseResult = Parse(text);
+            var success = !parseResult.IsMissing && parseResult.Position + parseResult.Length == text.Length;
+            result = success ? parseResult.Value : default(T);
+            return success;
         }
 
         public static Parser<T> operator |(Parser<T> p1, Parser<T> p2)
