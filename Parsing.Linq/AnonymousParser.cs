@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace System.Parsing.Linq
 {
     internal class AnonymousParser<T> : Parser<T>
@@ -9,6 +11,7 @@ namespace System.Parsing.Linq
             _func = func;
         }
 
+        [DebuggerStepThrough]
         public override ParserResult<T> Parse(string input, int offset)
         {
             return _func(input, offset);
