@@ -7,7 +7,7 @@
     /// <typeparam name="T">Type of the parser.</typeparam>
     internal class EmptyParser<T> : Parser<T>
     {
-        public override ParserResult<T> Parse(string input, int offset)
+        public override ParserResult<T> Parse(string input, int offset = 0)
         {
             return new ParserResult<T>(default(T), input, offset, 0);
         }

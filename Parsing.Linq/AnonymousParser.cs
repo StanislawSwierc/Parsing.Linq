@@ -12,7 +12,7 @@ namespace System.Parsing.Linq
         }
 
         [DebuggerStepThrough]
-        public override ParserResult<T> Parse(string input, int offset)
+        public override ParserResult<T> Parse(string input, int offset = 0)
         {
             return _func(input, offset);
         }
