@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing.Linq.Roslyn", "Pars
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsing.Linq.Roslyn.Test", "Parsing.Linq.Roslyn.Test\Parsing.Linq.Roslyn.Test.csproj", "{2DD53D63-4063-4967-8BD2-8977F3750A4B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{21C7BDBB-F781-48E4-8EB3-5EFD5358B666}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicXml", "Samples\BasicXml\BasicXml.csproj", "{EABA253D-E90A-405F-83AD-0075CCC0ABBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,8 +35,15 @@ Global
 		{2DD53D63-4063-4967-8BD2-8977F3750A4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DD53D63-4063-4967-8BD2-8977F3750A4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DD53D63-4063-4967-8BD2-8977F3750A4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EABA253D-E90A-405F-83AD-0075CCC0ABBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EABA253D-E90A-405F-83AD-0075CCC0ABBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EABA253D-E90A-405F-83AD-0075CCC0ABBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EABA253D-E90A-405F-83AD-0075CCC0ABBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EABA253D-E90A-405F-83AD-0075CCC0ABBE} = {21C7BDBB-F781-48E4-8EB3-5EFD5358B666}
 	EndGlobalSection
 EndGlobal
