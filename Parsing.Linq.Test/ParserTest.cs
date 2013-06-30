@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+// ReSharper disable InconsistentNaming
 namespace System.Parsing.Linq.Test
 {
     [TestClass]
@@ -108,7 +109,7 @@ namespace System.Parsing.Linq.Test
         }
 
         [TestMethod]
-        public void ZeroOrMore_EmptyString()
+        public void ZeroOrMore_ParseAll_EmptyString()
         {
             var parser = Parser.FromChar('c').ZeroOrMore();
 
@@ -118,7 +119,28 @@ namespace System.Parsing.Linq.Test
         }
 
         [TestMethod]
-        public void ZeroOrMore_Zero()
+        public void ZeroOrMore_ParseAll_One()
+        {
+            var parser = Parser.FromChar('a').ZeroOrMore();
+
+            var result = parser.ParseAll("a");
+
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual('a', result[0]);
+        }
+
+        [TestMethod]
+        public void ZeroOrMore_ParseAll_Many()
+        {
+            var parser = Parser.FromChar('a').ZeroOrMore();
+
+            var result = parser.ParseAll("aaaaa");
+
+            Assert.AreEqual(5, result.Length);
+        }
+
+        [TestMethod]
+        public void ZeroOrMore_Parse_Zero()
         {
             var parser = Parser.FromChar('a').ZeroOrMore();
 
@@ -129,7 +151,7 @@ namespace System.Parsing.Linq.Test
         }
 
         [TestMethod]
-        public void ZeroOrMore_One()
+        public void ZeroOrMore_Parse_One()
         {
             var parser = Parser.FromChar('a').ZeroOrMore();
 
@@ -137,13 +159,74 @@ namespace System.Parsing.Linq.Test
 
             Assert.IsTrue(!result.IsMissing);
             Assert.AreEqual(1, result.Value.Length);
-            Assert.AreEqual('a', result.Value[0]);
         }
 
         [TestMethod]
-        public void ZeroOrMore_Many()
+        public void ZeroOrMore_Parse_Many()
         {
             var parser = Parser.FromChar('a').ZeroOrMore();
+
+            var result = parser.Parse("aaaaab");
+
+            Assert.IsTrue(!result.IsMissing);
+            Assert.AreEqual(5, result.Value.Length);
+        }
+
+        [TestMethod]
+        public void OneOrMore_ParseAll_One()
+        {
+            var parser = Parser.FromChar('a').OneOrMore();
+
+            var result = parser.ParseAll("a");
+
+            Assert.AreEqual(1, result.Length);
+        }
+
+        [TestMethod]
+        public void OneOrMore_ParseAll_Many()
+        {
+            var parser = Parser.FromChar('a').OneOrMore();
+
+            var result = parser.ParseAll("aaaaa");
+
+            Assert.AreEqual(5, result.Length);
+        }
+
+        [TestMethod]
+        public void OneOrMore_Parse_EmptyString()
+        {
+            var parser = Parser.FromChar('a').OneOrMore();
+
+            var result = parser.Parse(string.Empty);
+
+            Assert.IsTrue(result.IsMissing);
+        }
+
+        [TestMethod]
+        public void OneOrMore_Parse_Zero()
+        {
+            var parser = Parser.FromChar('a').OneOrMore();
+
+            var result = parser.Parse("b");
+
+            Assert.IsTrue(result.IsMissing);
+        }
+
+        [TestMethod]
+        public void OneOrMore_Parse_One()
+        {
+            var parser = Parser.FromChar('a').OneOrMore();
+
+            var result = parser.Parse("ab");
+
+            Assert.IsTrue(!result.IsMissing);
+            Assert.AreEqual(1, result.Value.Length);
+        }
+
+        [TestMethod]
+        public void OneOrMore_Parse_Many()
+        {
+            var parser = Parser.FromChar('a').OneOrMore();
 
             var result = parser.Parse("aaaaab");
 

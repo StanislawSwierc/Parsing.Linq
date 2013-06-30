@@ -47,6 +47,19 @@ namespace System.Parsing.Linq
         public static Parser<T[]> ZeroOrMore<T>(
             this Parser<T> parser)
         {
+            return XOrMore(parser, true);
+        }
+
+        public static Parser<T[]> OneOrMore<T>(
+            this Parser<T> parser)
+        {
+            return XOrMore(parser, false);
+        }
+
+        private static Parser<T[]> XOrMore<T>(
+            this Parser<T> parser,
+            bool allowZero)
+        {
             return Create((text, offset) =>
                 {
                     var list = new List<T>();
@@ -55,7 +68,9 @@ namespace System.Parsing.Linq
                     for (var res = parser.Parse(text, curr);
                         !res.IsMissing;
                         curr += res.Length,
-                        res = curr < text.Length ? parser.Parse(text, curr) : ParserResult<T>.Missing)
+                        res = curr < text.Length
+                            ? parser.Parse(text, curr)
+                            : ParserResult<T>.Missing)
                     {
                         list.Add(res.Value);
                         length += res.Length;
@@ -63,7 +78,9 @@ namespace System.Parsing.Linq
 
                     return list.Count > 0
                         ? new ParserResult<T[]>(list.ToArray(), text, offset, length)
-                        : new ParserResult<T[]>(new T[0], text, offset, length);
+                        : allowZero
+                        ? new ParserResult<T[]>(new T[0], text, offset, length)
+                        : ParserResult<T[]>.Missing;
                 });
         }
     }
