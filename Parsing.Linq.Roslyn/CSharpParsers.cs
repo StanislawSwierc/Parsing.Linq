@@ -27,9 +27,15 @@ namespace System.Parsing.Linq
                 });
         }
 
-        public static readonly Parser<NameSyntax> Identifier = FromSyntaxParse(Syntax.ParseName);
+        public static readonly Parser<ArgumentListSyntax> ParseArgumentList = FromSyntaxParse(Syntax.ParseArgumentList);
+        public static readonly Parser<AttributeArgumentListSyntax> AttributeArgumentList = FromSyntaxParse(Syntax.ParseAttributeArgumentList);
+        public static readonly Parser<BracketedArgumentListSyntax> BracketedArgumentList = FromSyntaxParse(Syntax.ParseBracketedArgumentList);
+        public static readonly Parser<BracketedParameterListSyntax> BracketedParameterList = FromSyntaxParse(Syntax.ParseBracketedParameterList);
+        public static readonly Parser<CompilationUnitSyntax> CompilationUnit = FromSyntaxParse(Syntax.ParseCompilationUnit);
         public static readonly Parser<ExpressionSyntax> Expression = FromSyntaxParse(Syntax.ParseExpression);
-        public static readonly Parser<TypeSyntax> TypeName = FromSyntaxParse(Syntax.ParseTypeName);
+        public static readonly Parser<NameSyntax> Name = FromSyntaxParse(Syntax.ParseName);
         public static readonly Parser<ParameterListSyntax> ParameterList = FromSyntaxParse(Syntax.ParseParameterList);
+        public static readonly Parser<StatementSyntax> Statement = FromSyntaxParse(Syntax.ParseStatement);
+        public static readonly Parser<TypeSyntax> TypeName = FromSyntaxParse(Syntax.ParseTypeName);
     }
 }
