@@ -13,8 +13,8 @@ namespace System.Parsing.Linq
         public ParserResult(T value, string source, int position, int length)
         {
             if (source == null) throw new ArgumentNullException("source");
-            if (position < 0 || position >= source.Length) throw new ArgumentOutOfRangeException("position");
-            if (length < 0 || position + length > source.Length) throw new ArgumentOutOfRangeException("position");
+            if (position < 0 || position > source.Length) throw new ArgumentOutOfRangeException("position");
+            if (length < 0 || position + length > source.Length) throw new ArgumentOutOfRangeException("length");
 
             _value = value;
             _source = source;
