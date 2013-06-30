@@ -1,4 +1,6 @@
-﻿namespace System.Parsing.Linq
+﻿using System.Collections.Generic;
+
+namespace System.Parsing.Linq
 {
     public static partial class Parser
     {
@@ -39,6 +41,29 @@
                     var res = parser.Parse(text, offset);
                     if (res.IsMissing || !predicate(res.Value)) return ParserResult<T>.Missing;
                     return res;
+                });
+        }
+
+        public static Parser<T[]> ZeroOrMore<T>(
+            this Parser<T> parser)
+        {
+            return Create((text, offset) =>
+                {
+                    var list = new List<T>();
+                    var curr = offset;
+                    var length = 0;
+                    for (var res = parser.Parse(text, curr);
+                        !res.IsMissing;
+                        curr += res.Length,
+                        res = curr < text.Length ? parser.Parse(text, curr) : ParserResult<T>.Missing)
+                    {
+                        list.Add(res.Value);
+                        length += res.Length;
+                    }
+
+                    return list.Count > 0
+                        ? new ParserResult<T[]>(list.ToArray(), text, offset, length)
+                        : new ParserResult<T[]>(new T[0], text, offset, length);
                 });
         }
     }

@@ -31,7 +31,7 @@ namespace System.Parsing.Linq.Test
                 from t3 in Parser.FromChar('c')
                 select Tuple.Create(t1, t2, t3);
 
-            var r = p.ParseComplete("abc");
+            var r = p.ParseAll("abc");
 
             Assert.AreEqual('a', r.Item1);
             Assert.AreEqual('b', r.Item2);
@@ -101,11 +101,54 @@ namespace System.Parsing.Linq.Test
                 Parser.FromChar('a'),
                 Parser.FromChar('b'));
 
-            var result = parser.ParseComplete("There are two characters: 'a' and 'b'");
+            var result = parser.ParseAll("There are two characters: 'a' and 'b'");
 
-            Assert.IsNotNull(result);
             Assert.AreEqual('a', result.Item1);
             Assert.AreEqual('b', result.Item2);
+        }
+
+        [TestMethod]
+        public void ZeroOrMore_EmptyString()
+        {
+            var parser = Parser.FromChar('c').ZeroOrMore();
+
+            var result = parser.ParseAll(string.Empty);
+
+            Assert.AreEqual(0, result.Length);
+        }
+
+        [TestMethod]
+        public void ZeroOrMore_Zero()
+        {
+            var parser = Parser.FromChar('a').ZeroOrMore();
+
+            var result = parser.Parse("b");
+
+            Assert.IsTrue(!result.IsMissing);
+            Assert.AreEqual(0, result.Value.Length);
+        }
+
+        [TestMethod]
+        public void ZeroOrMore_One()
+        {
+            var parser = Parser.FromChar('a').ZeroOrMore();
+
+            var result = parser.Parse("ab");
+
+            Assert.IsTrue(!result.IsMissing);
+            Assert.AreEqual(1, result.Value.Length);
+            Assert.AreEqual('a', result.Value[0]);
+        }
+
+        [TestMethod]
+        public void ZeroOrMore_Many()
+        {
+            var parser = Parser.FromChar('a').ZeroOrMore();
+
+            var result = parser.Parse("aaaaab");
+
+            Assert.IsTrue(!result.IsMissing);
+            Assert.AreEqual(5, result.Value.Length);
         }
     }
 }
