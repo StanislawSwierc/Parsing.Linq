@@ -70,12 +70,6 @@ namespace System.Parsing.Linq
 
         public static Parser<T> FromRegex<T>(string pattern, Func<Match, T> select)
         {
-            // Make sure the regex starts matching from the beginning.
-            if (!pattern.StartsWith("^"))
-            {
-                pattern = string.Concat("^", pattern);
-            }
-
             var regex = new Regex(pattern);
 
             return Create((text, offset) =>
