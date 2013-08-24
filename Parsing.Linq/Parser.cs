@@ -50,6 +50,14 @@
                 });
         }
 
+        public static Parser<Tuple<T, T>> operator &(Parser<T> p1, Parser<T> p2)
+        {
+            return
+                from t1 in p1
+                from t2 in p2
+                select Tuple.Create(t1, t2);
+        }
+
         /// <remarks>
         /// This method was added directly to the Parse class to get better syntax.
         /// It is conversion from one type to another. In order to pass the information

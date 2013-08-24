@@ -50,6 +50,19 @@ namespace System.Parsing.Linq.Test
         }
 
         [TestMethod]
+        public void AndTest()
+        {
+            var p1 = Parser.FromRegex(@"\d");
+            var p2 = Parser.FromRegex(@"\w");
+            var p = p1 & p2;
+
+            var result = p.ParseAll("1a");
+
+            Assert.AreEqual(result.Item1, "1");
+            Assert.AreEqual(result.Item2, "a");
+        }
+
+        [TestMethod]
         public void CastTest()
         {
             var p = Parser.FromRegex(@"\d", int.Parse)
