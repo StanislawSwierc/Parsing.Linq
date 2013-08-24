@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace System.Parsing.Linq
 {
+
     public static partial class Parser
     {
         public static Parser<T2> Select<T1, T2>(
@@ -42,6 +44,29 @@ namespace System.Parsing.Linq
                     if (res.IsMissing || !predicate(res.Value)) return ParserResult<T>.Missing;
                     return res;
                 });
+        }
+
+        /// <summary>
+        /// Join operator can easily create parsers which can parse text
+        /// consisting of  elements concatenated, using the specified separator
+        /// in between.
+        /// </summary>
+        public static Parser<T2[]> Join<T1, T2>(
+            Parser<T1> separator,
+            Parser<T2> parser)
+        {
+            var tail =
+                from t1 in separator
+                from t2 in parser
+                select t2;
+
+            // TODO: Improve the performance by unfolding ZeroOrMore
+            // Adding head to an array is very expensive operation. It would be
+            // better to use a different data structure.
+            return
+                from t1 in parser
+                from t2 in tail.ZeroOrMore()
+                select Enumerable.Concat(new[] { t1 }, t2).ToArray();
         }
 
         public static Parser<T[]> ZeroOrMore<T>(

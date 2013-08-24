@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // ReSharper disable InconsistentNaming
 namespace System.Parsing.Linq.Test
@@ -255,6 +256,19 @@ namespace System.Parsing.Linq.Test
 
             Assert.IsTrue(!result.IsMissing);
             Assert.AreEqual(5, result.Value.Length);
+        }
+
+        [TestMethod]
+        public void JoinTest()
+        {
+            var elements = Enumerable.Range(0, 10).Select(i => i.ToString());
+            var separator = "\t";
+            var parser = Parser.Join(Parser.FromText(separator), Parser.FromRegex("\\d+"));
+            var text = string.Join(separator, elements);
+
+            var result = parser.ParseAll(text);
+
+            Assert.IsTrue(Enumerable.SequenceEqual(elements, result));
         }
     }
 }
