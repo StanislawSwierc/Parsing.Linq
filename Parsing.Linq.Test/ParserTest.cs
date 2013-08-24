@@ -109,6 +109,16 @@ namespace System.Parsing.Linq.Test
         }
 
         [TestMethod]
+        public void ZeroOrMore_EmptyParser_Terminates()
+        {
+            var parser = Parser.Empty<char>().ZeroOrMore();
+
+            var result = parser.Parse("test");
+
+            Assert.AreEqual(1, result.Value.Length);
+        }
+
+        [TestMethod]
         public void ZeroOrMore_ParseAll_EmptyString()
         {
             var parser = Parser.FromChar('c').ZeroOrMore();

@@ -74,6 +74,12 @@ namespace System.Parsing.Linq
                     {
                         list.Add(res.Value);
                         length += res.Length;
+
+                        // If the parse operation returns result of length zero
+                        // then in theory the collection returned should be
+                        // infinitely long. Break the loop as soon as such
+                        // scenario is detected.
+                        if (res.Length == 0) break;
                     }
 
                     return list.Count > 0
