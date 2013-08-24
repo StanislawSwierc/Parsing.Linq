@@ -55,18 +55,20 @@ namespace System.Parsing.Linq
             Parser<T1> separator,
             Parser<T2> parser)
         {
-            var tail =
+            var tailElement =
                 from t1 in separator
                 from t2 in parser
                 select t2;
 
-            // TODO: Improve the performance by unfolding ZeroOrMore
-            // Adding head to an array is very expensive operation. It would be
-            // better to use a different data structure.
-            return
-                from t1 in parser
-                from t2 in tail.ZeroOrMore()
-                select Enumerable.Concat(new[] { t1 }, t2).ToArray();
+            return Create((text, offset) =>
+                {
+                    var head = parser.Parse(text, offset);
+                    if (head.IsMissing) return new ParserResult<T2[]>(new T2[0], text, offset, 0);
+                    var list = new List<T2>();
+                    list.Add(head.Value);
+                    var tailLength = XOrMoreCore(tailElement, text, offset + head.Length, list);
+                    return new ParserResult<T2[]>(list.ToArray(), text, offset, head.Length + tailLength);
+                });
         }
 
         public static Parser<T[]> ZeroOrMore<T>(
@@ -88,24 +90,7 @@ namespace System.Parsing.Linq
             return Create((text, offset) =>
                 {
                     var list = new List<T>();
-                    var curr = offset;
-                    var length = 0;
-                    for (var res = parser.Parse(text, curr);
-                        !res.IsMissing;
-                        curr += res.Length,
-                        res = curr < text.Length
-                            ? parser.Parse(text, curr)
-                            : ParserResult<T>.Missing)
-                    {
-                        list.Add(res.Value);
-                        length += res.Length;
-
-                        // If the parse operation returns result of length zero
-                        // then in theory the collection returned should be
-                        // infinitely long. Break the loop as soon as such
-                        // scenario is detected.
-                        if (res.Length == 0) break;
-                    }
+                    var length = XOrMoreCore(parser, text, offset, list);
 
                     return list.Count > 0
                         ? new ParserResult<T[]>(list.ToArray(), text, offset, length)
@@ -113,6 +98,36 @@ namespace System.Parsing.Linq
                         ? new ParserResult<T[]>(new T[0], text, offset, length)
                         : ParserResult<T[]>.Missing;
                 });
+        }
+
+        /// <remarks>
+        /// This method has side effects! It adds elements to the list passed
+        /// as a parameter. This allows to get better performance by accessing
+        /// the same list in different methods. Join operator is an example of
+        /// where it makes sense.
+        /// </remarks>>
+        private static int XOrMoreCore<T>(Parser<T> parser, string text, int offset, List<T> list)
+        {
+            var curr = offset;
+            var length = 0;
+            for (var res = parser.Parse(text, curr);
+                !res.IsMissing;
+                curr += res.Length,
+                res = curr < text.Length
+                    ? parser.Parse(text, curr)
+                    : ParserResult<T>.Missing)
+            {
+                list.Add(res.Value);
+                length += res.Length;
+
+                // If the parse operation returns result of length zero
+                // then in theory the collection returned should be
+                // infinitely long. Break the loop as soon as such
+                // scenario is detected.
+                if (res.Length == 0) break;
+            }
+
+            return length;
         }
     }
 }
