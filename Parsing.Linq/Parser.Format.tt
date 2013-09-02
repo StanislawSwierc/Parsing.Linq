@@ -73,6 +73,19 @@ namespace System.Parsing.Linq
 <# } #>
                 select new Tuple<<#=typeParameters#>>(<#=argsInvokation#>);
         }
+
+        public static Parser<TResult> FromFormat<<#=typeParameters#>, TResult>(string format, <#=argsDeclaration#>, Func<<#=typeParameters#>, TResult> func)
+        {
+            var parts = SplitFormat(format, <#=length#>);
+
+            return
+                from t1 in parts[0]
+<# for(var i=1; i <= length; i++) { #>
+                from t<#=i*2#> in p<#=i#>
+                from t<#=i*2+1#> in parts[<#=i#>]
+<# } #>
+                select func(<#=argsInvokation#>);
+        }
 <# } #>
     }
 }
