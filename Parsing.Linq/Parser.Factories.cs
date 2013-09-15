@@ -76,7 +76,7 @@ namespace System.Parsing.Linq
                 {
                     var match = regex.Match(text, offset);
                     return match.Success
-                        ? new ParserResult<T>(select(match), text, offset, match.Length)
+                        ? new ParserResult<T>(select(match), text, match.Index, match.Length)
                         : ParserResult<T>.Missing;
                 });
         }
