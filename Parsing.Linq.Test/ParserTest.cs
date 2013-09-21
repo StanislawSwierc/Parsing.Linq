@@ -274,12 +274,12 @@ namespace System.Parsing.Linq.Test
         [TestMethod]
         public void FromRegexTest()
         {
-            var parser = Parser.FromRegex("[aoeiu]");
+            var parser = Parser.FromRegex("[abc]");
             var result = parser.Parse("cat");
 
             Assert.IsFalse(result.IsMissing);
-            Assert.AreEqual("a", result.Value);
-            Assert.AreEqual(1, result.Position);
+            Assert.AreEqual("c", result.Value);
+            Assert.AreEqual(0, result.Position);
             Assert.AreEqual(1, result.Length);
         }
 
@@ -316,7 +316,7 @@ namespace System.Parsing.Linq.Test
                 from period in Parser.FromChar('.')
                 select hello + world;
 
-            Assert.IsTrue(CanParse(parser, "preffix Hello world."));
+            Assert.IsTrue(CanParse(parser, "Hello world."));
         }
 
         [TestMethod]
@@ -327,7 +327,7 @@ namespace System.Parsing.Linq.Test
                 from b in Parser.FromText("bbb")
                 select a + b;
 
-            Assert.IsTrue(CanParse(parser, "preffix...aaabbb...suffix"));
+            Assert.IsTrue(CanParse(parser, "aaabbb...suffix"));
             Assert.IsFalse(CanParse(parser, "123bbbaaa"));
         }
     }
