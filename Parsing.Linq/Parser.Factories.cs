@@ -70,13 +70,20 @@ namespace System.Parsing.Linq
 
         public static Parser<T> FromRegex<T>(string pattern, Func<Match, T> select)
         {
+            if (pattern == null) throw new ArgumentNullException("pattern");
+            if (select == null) throw new ArgumentNullException("select");
+
+            // Add an anchor to make sure tha the match starts precisely at offset
+            pattern = @"\G" + pattern;
+
+            // Create the regex object to validate the pattern
             var regex = new Regex(pattern);
 
             return Create((text, offset) =>
                 {
                     var match = regex.Match(text, offset);
                     return match.Success
-                        ? new ParserResult<T>(select(match), text, match.Index, match.Length)
+                        ? new ParserResult<T>(select(match), text, offset, match.Length)
                         : ParserResult<T>.Missing;
                 });
         }

@@ -28,9 +28,9 @@ namespace System.Parsing.Linq
                     var res1 = parser.Parse(text, offset);
                     if (res1.IsMissing) return ParserResult<TValue2>.Missing;
                     var val1 = res1.Value;
-                    var res2 = selector(val1).Parse(text, res1.Position + res1.Length);
+                    var res2 = selector(val1).Parse(text, offset + res1.Length);
                     if (res2.IsMissing) return ParserResult<TValue2>.Missing;
-                    return new ParserResult<TValue2>(projector(val1, res2.Value), text, res1.Position, res1.Length + res2.Length);
+                    return new ParserResult<TValue2>(projector(val1, res2.Value), text, offset, res1.Length + res2.Length);
                 });
         }
 
