@@ -7,6 +7,42 @@ namespace System.Parsing.Linq.Test
     public partial class ParserTest
     {
         [TestMethod]
+        public void FromRegex_WithStartAnchor_Success1()
+        {
+            var parser = Parser.FromRegex("^a");
+            CanParse(parser, "a");
+        }
+
+        [TestMethod]
+        public void FromRegex_WithStartAnchor_Success2()
+        {
+            var parser =
+                from t1 in Parser.FromRegex("^a")
+                from t2 in Parser.FromRegex("^b")
+                select t1;
+
+            CanParse(parser, "ab");
+        }
+
+        [TestMethod]
+        public void FromRegex_WithAdjacentAnchor_Success1()
+        {
+            var parser = Parser.FromRegex("^a");
+            CanParse(parser, "a");
+        }
+
+        [TestMethod]
+        public void FromRegex_WithAdjacentAnchor_Success2()
+        {
+            var parser =
+                from t1 in Parser.FromRegex(@"\Ga")
+                from t2 in Parser.FromRegex(@"\Gb")
+                select t1;
+
+            CanParse(parser, "ab");
+        }
+
+        [TestMethod]
         public void FromRegexTest()
         {
             var parser = Parser.FromRegex("[abc]");
