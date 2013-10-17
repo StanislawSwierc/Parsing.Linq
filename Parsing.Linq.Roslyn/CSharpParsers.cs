@@ -37,5 +37,17 @@ namespace System.Parsing.Linq
         public static readonly Parser<ParameterListSyntax> ParameterList = FromSyntaxParse(Syntax.ParseParameterList);
         public static readonly Parser<StatementSyntax> Statement = FromSyntaxParse(Syntax.ParseStatement);
         public static readonly Parser<TypeSyntax> TypeName = FromSyntaxParse(Syntax.ParseTypeName);
+
+        public readonly static Parser<IdentifierNameSyntax> IdentifierName = FromSyntaxParse(Syntax.ParseName)
+            .Where(s => s.Kind == SyntaxKind.IdentifierName)
+            .Select(s => (IdentifierNameSyntax)s);
+
+        public readonly static Parser<GenericNameSyntax> GenericName = FromSyntaxParse(Syntax.ParseName)
+            .Where(s => s.Kind == SyntaxKind.GenericName)
+            .Select(s => (GenericNameSyntax)s);
+
+        public readonly static Parser<QualifiedNameSyntax> QualifiedName = FromSyntaxParse(Syntax.ParseName)
+            .Where(s => s.Kind == SyntaxKind.QualifiedName)
+            .Select(s => (QualifiedNameSyntax)s);
     }
 }
