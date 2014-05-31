@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/hv9fr91itc7dbgcl)](https://ci.appveyor.com/project/StanislawSwierc/parsing-linq)
+
 Parsing.Linq
 ============
 
